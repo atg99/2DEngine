@@ -21,6 +21,8 @@ public:
 
 	void SetActors(vector<AActor*> NewActors);
 
+	void SortActor();
+
 protected:
 	std::vector<AActor*> Actors;
 };

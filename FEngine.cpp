@@ -94,22 +94,7 @@ void FEngine::Init()
 		}
 	}
 
-	vector<AActor*> Actors = World->GetAllActors();
-
-	for (int i = 0; i < Actors.size()-1; ++i)
-	{
-		int MinIndex = i;
-		for (int j = i + 1; j < Actors.size(); ++j)
-		{
-			if (Actors[j]->ZOrder < Actors[MinIndex]->ZOrder)
-			{
-				MinIndex = j;
-			}
-		}
-		swap(Actors[i], Actors[MinIndex]);
-	}
-
-	World->SetActors(Actors);
+	World->SortActor();
 
 	Mapfile.close();
 }
@@ -130,6 +115,6 @@ void FEngine::Tick()
 
 void FEngine::Render()
 {
-	//system("cls");
+	system("cls");
 	GetWorld()->Render();
 }

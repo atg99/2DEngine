@@ -125,6 +125,7 @@
   <ItemGroup>
     <ClCompile Include="AActor.cpp" />
     <ClCompile Include="APlayer.cpp" />
+    <ClCompile Include="DynamicArray.cpp" />
     <ClCompile Include="FEngine.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Goal.cpp" />
@@ -136,6 +137,7 @@
   <ItemGroup>
     <ClInclude Include="AActor.h" />
     <ClInclude Include="APlayer.h" />
+    <ClInclude Include="DynamicArray.h" />
     <ClInclude Include="FEngine.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Goal.h" />

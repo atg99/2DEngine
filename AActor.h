@@ -31,16 +31,18 @@ public:
 		Shape = MyShape;
 	}
 
+	__forceinline int GetZOrder()
+	{
+		return ZOrder;
+	}
+
 	void Render();
 
 protected:
 	FVector2D Location;
 
-	
-
 	char Shape;
 
-public:
 	int ZOrder = 0;
 };
 

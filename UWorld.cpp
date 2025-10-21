@@ -45,3 +45,21 @@ void UWorld::SetActors(vector<AActor*> NewActors)
 {
 	Actors = NewActors;
 }
+
+void UWorld::SortActor()
+{
+	//n^2
+	for (int i = 0; i < Actors.size() - 1; ++i)
+	{
+		int MinIndex = i;
+		for (int j = i + 1; j < Actors.size(); ++j)
+		{
+			if (Actors[j]->GetZOrder() < Actors[MinIndex]->GetZOrder())
+			{
+				MinIndex = j;
+			}
+		}
+		swap(Actors[i], Actors[MinIndex]);
+	}
+
+}

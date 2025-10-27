@@ -13,9 +13,10 @@ UWorld::~UWorld()
 {
 }
 
-std::vector<AActor*> UWorld::GetAllActors() const
+void UWorld::GetAllActors(vector<AActor*>& AllActors) const
 {
-	return Actors;
+	AllActors = Actors;
+	return;
 }
 
 AActor* UWorld::SpawnActor(AActor* NewActor)
@@ -61,5 +62,8 @@ void UWorld::SortActor()
 		}
 		swap(Actors[i], Actors[MinIndex]);
 	}
+}
 
+void UWorld::SimulatePhysics()
+{
 }

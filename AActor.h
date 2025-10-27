@@ -16,6 +16,11 @@ public:
 		return Location;
 	}
 
+	__forceinline bool GetbIsCollision() const
+	{
+		return bIsCollision;
+	}
+
 	void SetActorLocation(FVector2D Value)
 	{
 		Location.X = Value.X;
@@ -36,7 +41,7 @@ public:
 		return ZOrder;
 	}
 
-	void Render();
+	virtual void Render();
 
 protected:
 	FVector2D Location;
@@ -44,5 +49,16 @@ protected:
 	char Shape;
 
 	int ZOrder = 0;
+
+	bool bIsCollision = false;
+
+	bool bIsOverlap = false;
+
+public:
+
+protected:
+	virtual bool CheckCollsion(const AActor* Other);
+	virtual void ActorBeginOverlap();
+	virtual void Hit();
 };
 

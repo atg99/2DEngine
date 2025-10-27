@@ -11,7 +11,7 @@ public:
 	UWorld();
 	virtual ~UWorld();
 
-	std::vector<AActor*> GetAllActors() const;
+	void GetAllActors(vector<AActor*>& AllActors) const;
 
 	AActor* SpawnActor(AActor* NewActor);
 
@@ -22,6 +22,8 @@ public:
 	void SetActors(vector<AActor*> NewActors);
 
 	void SortActor();
+
+	virtual void SimulatePhysics();
 
 protected:
 	std::vector<AActor*> Actors;

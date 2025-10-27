@@ -11,6 +11,7 @@
 #include "Monster.h"
 #include "Goal.h"
 #include <algorithm>
+#include "GameMode.h"
 
 using namespace std;
 
@@ -93,10 +94,12 @@ void FEngine::Init()
 			Y++;
 		}
 	}
-
-	World->SortActor();
-
 	Mapfile.close();
+	World->SortActor();
+	
+	
+	
+	World->SpawnActor(new AGameMode());
 }
 
 void FEngine::Term()

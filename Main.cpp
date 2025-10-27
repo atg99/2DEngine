@@ -1,11 +1,19 @@
 #include <iostream>
-#include "AActor.h"
-#include "APlayer.h"
 #include <vector>
-#include "FEngine.h"
 #include <fstream>
 #include <string>
+#include <list>
+
+#include "AActor.h"
+#include "APlayer.h"
+#include "FEngine.h"
 #include "Wall.h"
+#include "DynamicArray.h"
+#include "Vector.h"
+#include "SDL3/SDL.h"
+
+#pragma comment(lib, "SDL3")
+
 
 using namespace std;
 
@@ -114,7 +122,7 @@ void Print(T* Numbers, int _NumberOfElement)
 {
 	for (int i = 0; i < _NumberOfElement; ++i)
 	{
-		cout << Numbers[i]);
+		cout << Numbers[i];
 	}
 }
 
@@ -126,17 +134,33 @@ public:
 	Y Data2;
 };
 
+//C++ 하려면 필수
+//class 설계
+//자료구조(STL) 사용 잘하나
 
 int main(int argc, char* argv[])
 {
-	int IntNumbers[10] = { 10, 6, 5, 2, 9, 7, 4, 3, 1, 8 };
-	int FloatNumbers[10] = { 10.f, 6.f, 5.f, 2.f, 9, 7, 4, 3, 1, 8 };
-	Print<int>(IntNumbers, 10);
-	//FEngine::GetInstance()->Init();
-	//FEngine::GetInstance()->Run();
-	//FEngine::GetInstance()->Term();
+	//TDynamicArray<int>* MyDyArray = new TDynamicArray<int>();
+	//for (int i = 0; i < 8; ++i)
+	//{
+	//	MyDyArray->PushBack(i);
+	//}
 
-	//delete FEngine::GetInstance();
+	//for (int i = 0; i < 25; ++i)
+	//{
+	//	MyDyArray[i];
+	//}	
+
+	//int IntNumbers[10] = { 10, 6, 5, 2, 9, 7, 4, 3, 1, 8 };
+	//int FloatNumbers[10] = { 10.f, 6.f, 5.f, 2.f, 9, 7, 4, 3, 1, 8 };
+	//Print<int>(IntNumbers, 10);
+
+
+	FEngine::GetInstance()->Init();
+	FEngine::GetInstance()->Run();
+	FEngine::GetInstance()->Term();
+
+	delete FEngine::GetInstance();
 
 	void (*FunctionPointer)();
 
@@ -145,6 +169,27 @@ int main(int argc, char* argv[])
 	FunctionPointer();
 
 	Sort(Greater);
+
+	vector<int> v;
+	v.push_back(1);
+	v.push_back(2);
+	v.push_back(3);
+
+	for (auto i = v.begin(); i != v.end(); ++i)
+	{
+		cout << *i << endl;
+	}
+
+	list<int> l;
+	l.push_back(1);
+	l.push_back(2);
+	l.push_back(3);
+
+	for (auto li : l)
+	{
+		cout << li << endl;
+	}
+
 
 	//MyEngine = nullptr;
 

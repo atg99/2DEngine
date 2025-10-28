@@ -84,6 +84,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -98,6 +99,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -110,6 +112,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,6 +130,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -138,30 +142,47 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AActor.cpp" />
+    <ClCompile Include="ActorComponent.cpp" />
     <ClCompile Include="APlayer.cpp" />
+    <ClCompile Include="CollisionComponent.cpp" />
+    <ClCompile Include="Component.cpp" />
     <ClCompile Include="DynamicArray.cpp" />
     <ClCompile Include="FEngine.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GameMode.cpp" />
     <ClCompile Include="Goal.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="PaperFlipBookComponent.cpp" />
+    <ClCompile Include="SceneComponent.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UWorld.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AActor.h" />
+    <ClInclude Include="ActorComponent.h" />
     <ClInclude Include="APlayer.h" />
+    <ClInclude Include="CollisionComponent.h" />
+    <ClInclude Include="Component.h" />
     <ClInclude Include="DynamicArray.h" />
     <ClInclude Include="FEngine.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="GameMode.h" />
     <ClInclude Include="Goal.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="PaperFlipBookComponent.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SceneComponent.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="UWorld.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Wall.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Player.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

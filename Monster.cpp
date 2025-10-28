@@ -5,17 +5,31 @@
 #include "FEngine.h"
 #include "Vector.h"
 #include <vector>
+#include "PaperFlipBookComponent.h"
+#include "CollisionComponent.h"
 
 using namespace std;
 
 random_device rd;
 mt19937 gen(rd());
-uniform_int_distribution<> dist(-1, 1);
+uniform_int_distribution<> dist(0, 3);
 
 AMonster::AMonster()
 {
-	ZOrder = 3;
-	bIsCollision = true;
+	FlipComp->SetZOrder(3);
+	FlipComp->SetColor({ 0,100,255,0 });
+
+	SDL_Surface* surface = SDL_LoadBMP("Monster1.bmp");
+	if (surface)
+	{
+		SDL_Log("load BMP: %s", SDL_GetError());
+		FlipComp->MyTexture = SDL_CreateTextureFromSurface(FEngine::GetInstance()->MyRenderer, surface);
+		SDL_DestroySurface(surface);
+	}
+
+	CollisionComp->SetOverlap(true);
+	CollisionComp->SetCollision(true);
+
 }
 
 AMonster::~AMonster()
@@ -24,12 +38,32 @@ AMonster::~AMonster()
 
 void AMonster::Tick()
 {
-	int X = dist(gen);
-	int Y = dist(gen);
+	TotalTime += float(FEngine::GetInstance()->GetWorldDeltaSeconds());
+	if (TotalTime < 0.5f)
+	{
+		return;
+	}
+	TotalTime = 0;
+	int dir = dist(gen);
 	FVector2D SaveLocation = Location;
-	Location.X += X;
-	Location.Y += Y;
-
+	
+	switch (dir)
+	{
+	case 0:
+		Location.X++;
+		break;
+	case 1:
+		Location.X--;
+		break;
+	case 2:
+		Location.Y++;
+		break;
+	case 3:
+		Location.Y--;
+		break;
+	default:
+		break;
+	}
 
 	bool bFlag = false;
 	vector<AActor*> AllActors;
@@ -40,7 +74,7 @@ void AMonster::Tick()
 		{
 			continue;
 		}
-		if (CheckCollsion(OtherActor))
+		if (CollisionComp->CheckCollsion(OtherActor))
 		{
 			bFlag = true;
 			break;

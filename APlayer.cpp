@@ -3,13 +3,26 @@
 #include "FEngine.h"
 #include <vector>
 #include "UWorld.h"
+#include "PaperFlipBookComponent.h"
+#include "CollisionComponent.h"
+#include <SDL3/SDL.h>
 
 using namespace std;
 
 APlayer::APlayer()
 {
-	ZOrder = 4;
-	bIsCollision = true;
+	FlipComp->SetZOrder(4);
+	FlipComp->SetColor({ 0,255,0,0 });
+
+	SDL_Surface* surface = SDL_LoadBMP("Cat.bmp");
+	if (surface)
+	{
+		SDL_Log("load BMP: %s", SDL_GetError());
+		FlipComp->MyTexture = SDL_CreateTextureFromSurface(FEngine::GetInstance()->MyRenderer, surface);
+		SDL_DestroySurface(surface);
+	}
+
+	CollisionComp->SetCollision(true);
 }
 
 APlayer::~APlayer()
@@ -49,7 +62,7 @@ void APlayer::Tick()
 		{
 			continue;
 		}
-		if (CheckCollsion(OtherActor))
+		if (CollisionComp->CheckCollsion(OtherActor))
 		{
 			bFlag = true;
 			break;

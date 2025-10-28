@@ -10,16 +10,8 @@
 #include "Wall.h"
 #include "DynamicArray.h"
 #include "Vector.h"
-
-#include <SDL3/SDL.h>
-
 #include <SDL3/SDL_main.h>
-#include <SDL3/SDL_render.h>
-
 #include <random>
-
-
-#pragma comment(lib, "SDL3")
 
 
 using namespace std;
@@ -140,100 +132,19 @@ public:
 	T Data;
 	Y Data2;
 };
-void DrawCircle(SDL_Renderer* renderer, int32_t centreX, int32_t centreY, int32_t radius);
 //C++ 하려면 필수
 //class 설계
 //자료구조(STL) 사용 잘하나
 
 int SDL_main(int argc, char* argv[])
 {
+
 	random_device rd;
 	mt19937 gen(rd());
 	uniform_int_distribution<> distpos(0, 480);
 	uniform_int_distribution<> distsize(0, 100);
 	uniform_int_distribution<> distRGB(0, 255);
 	uniform_int_distribution<> distNum(1000, 10000);
-
-	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO); //SDL video initalize
-
-	SDL_Window* MyWindow = SDL_CreateWindow("Game", 480, 480, SDL_WindowFlags SDL_WINDOW_OPENGL);
-
-	SDL_Renderer* MyRenderer = SDL_CreateRenderer(MyWindow, nullptr);
-
-	SDL_Event MyEvent;
-	
-	bool bIsRunning = true;
-	while (bIsRunning)
-	{
-		if (SDL_PollEvent(&MyEvent))
-		{
-			if (MyEvent.type == SDL_EVENT_QUIT)
-			{
-				bIsRunning = false;
-			}
-		}
-		else
-		{
-			//command queue
-			SDL_SetRenderDrawColor(MyRenderer, 0, 0, 100, 255); // 그릴거 지정
-			SDL_RenderClear(MyRenderer); //화면 업데이트
-
-			
-			//사각형 100개 랜덤
-			for (int i = 0; i < 2; ++i)
-			{
-				SDL_SetRenderDrawColor(MyRenderer, distRGB(gen), distRGB(gen), distRGB(gen), 255);
-				//SDL_Texture* MyTexture;
-				//MyTexture = SDL_CreateTexture(MyRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 300, 300);
-				SDL_FRect Rect = {float(SDL_rand(479)), float(SDL_rand(479)), float(SDL_rand(479)) + 1.f, float(SDL_rand(479)) + 1};
-				//SDL_RenderTexture(MyRenderer, MyTexture, &Rect, &Rect);
-				SDL_RenderFillRect(MyRenderer, &Rect);
-				SDL_RenderRect(MyRenderer, &Rect);
-
-				SDL_SetRenderDrawColor(MyRenderer, 150, 0, 0, 255);
-				int CenterX = 240 + SDL_rand(30);
-				int CenterY = 240 + SDL_rand(30);
-				int Radius = 100;
-				for (int Degree = 10; Degree <= 360; Degree += 10)
-				{
-					int OldX = SDL_cos(float((Degree - 10) * SDL_PI_F / 180.0f)) * Radius + CenterX;
-					int OldY = SDL_sin(float((Degree - 10) * SDL_PI_F / 180.0f)) * Radius + CenterY;
-
-					int X = SDL_cos(float(Degree * SDL_PI_F / 180.0f)) * Radius + CenterX;
-					int Y = SDL_sin(float(Degree * SDL_PI_F / 180.0f)) * Radius + CenterY;
-
-					SDL_RenderLine(MyRenderer, OldX, OldY, X, Y);
-				}
-
-				//DrawCircle(MyRenderer, 100, 100, 50);
-				SDL_RenderPresent(MyRenderer); //화면 제공
-			}
-			
-	
-		}
-	}
-
-	SDL_DestroyRenderer(MyRenderer);
-
-	SDL_DestroyWindow(MyWindow);
-
-	SDL_Quit();
-
-	//TDynamicArray<int>* MyDyArray = new TDynamicArray<int>();
-	//for (int i = 0; i < 8; ++i)
-	//{
-	//	MyDyArray->PushBack(i);
-	//}
-
-	//for (int i = 0; i < 25; ++i)
-	//{
-	//	MyDyArray[i];
-	//}	
-
-	//int IntNumbers[10] = { 10, 6, 5, 2, 9, 7, 4, 3, 1, 8 };
-	//int FloatNumbers[10] = { 10.f, 6.f, 5.f, 2.f, 9, 7, 4, 3, 1, 8 };
-	//Print<int>(IntNumbers, 10);
-
 
 	FEngine::GetInstance()->Init();
 	FEngine::GetInstance()->Run();
@@ -277,42 +188,4 @@ int SDL_main(int argc, char* argv[])
 	//Singleton::Instance;
 
 	return 0;
-}
-
-void DrawCircle(SDL_Renderer* renderer, int32_t centreX, int32_t centreY, int32_t radius)
-{
-	const int32_t diameter = (radius * 2);
-
-	int32_t x = (radius - 1);
-	int32_t y = 0;
-	int32_t tx = 1;
-	int32_t ty = 1;
-	int32_t error = (tx - diameter);
-
-	while (x >= y)
-	{
-		//  Each of the following renders an octant of the circle
-		SDL_RenderPoint(renderer, centreX + x, centreY - y);
-		SDL_RenderPoint(renderer, centreX + x, centreY + y);
-		SDL_RenderPoint(renderer, centreX - x, centreY - y);
-		SDL_RenderPoint(renderer, centreX - x, centreY + y);
-		SDL_RenderPoint(renderer, centreX + y, centreY - x);
-		SDL_RenderPoint(renderer, centreX + y, centreY + x);
-		SDL_RenderPoint(renderer, centreX - y, centreY - x);
-		SDL_RenderPoint(renderer, centreX - y, centreY + x);
-
-		if (error <= 0)
-		{
-			++y;
-			error += ty;
-			ty += 2;
-		}
-
-		if (error > 0)
-		{
-			--x;
-			tx += 2;
-			error += (tx - diameter);
-		}
-	}
 }

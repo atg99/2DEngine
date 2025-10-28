@@ -1,6 +1,11 @@
 #pragma once
 #include "Vector.h"
 
+#include <vector>
+
+class UComponent;
+class UPaperFlipBookComponent;
+class UCollisionComponent;
 class AActor
 {
 public:
@@ -16,48 +21,41 @@ public:
 		return Location;
 	}
 
-	__forceinline bool GetbIsCollision() const
-	{
-		return bIsCollision;
-	}
-
 	void SetActorLocation(FVector2D Value)
 	{
 		Location.X = Value.X;
 		Location.Y = Value.Y;
 	}
 
-	__forceinline char GetShape() 
+	void AddComponent(UComponent* InComponent);
+
+	std::vector<UComponent*> GetComponents();
+
+	__forceinline UPaperFlipBookComponent* GetFlipComp() const
 	{
-		return Shape;
+		return FlipComp;
 	}
 
-	__forceinline void SetShape(char MyShape) {
-		Shape = MyShape;
-	}
-
-	__forceinline int GetZOrder()
+	__forceinline UCollisionComponent* GetCollisionComp() const
 	{
-		return ZOrder;
-	}
-
-	virtual void Render();
+		return CollisionComp;
+	} 
 
 protected:
 	FVector2D Location;
 
-	char Shape;
+	UPaperFlipBookComponent* FlipComp;
 
-	int ZOrder = 0;
+	UCollisionComponent* CollisionComp;
 
-	bool bIsCollision = false;
-
-	bool bIsOverlap = false;
+	std::vector<UComponent*> Components;
 
 public:
 
+
+
 protected:
-	virtual bool CheckCollsion(const AActor* Other);
+	
 	virtual void ActorBeginOverlap();
 	virtual void Hit();
 };

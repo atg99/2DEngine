@@ -7,5 +7,8 @@ public:
 	virtual ~AMonster();
 
 	virtual void Tick() override;
+
+protected:
+	float TotalTime = 0;
 };
 

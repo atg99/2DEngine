@@ -1,6 +1,10 @@
 #pragma once
+#include <SDL3/SDL.h>
+#include "Input.h"
 
 class UWorld;
+class UTimer;
+
 
 class FEngine
 {
@@ -23,8 +27,10 @@ public:
 
 	__forceinline int GetKeyCode() const
 	{
-		return KeyCode;
+		return InputDevice->KeyCode;
 	}
+
+	void GameEnd();
 
 protected:
 	void Input();
@@ -34,8 +40,6 @@ protected:
 	class UWorld* World;
 
 	bool bIsRunning = true;
-
-	int KeyCode = 0;
 
 public:
 	static FEngine* GetInstance()
@@ -47,10 +51,24 @@ public:
 		return Instance;
 	}
 
+	void OpenLevel();
+
 protected:
 	static FEngine* Instance;
+public:
+	SDL_Window* MyWindow;
+
+	SDL_Renderer* MyRenderer;
+	SDL_Event MyEvent;
+
+	double GetWorldDeltaSeconds() const;
+
+protected:
+	UTimer* Timer;
+
+	UInput* InputDevice;
 };
 
 //extern FEngine* GEngine;
 
-#define GEngine    FEngine::GetInstance();
+#define GEngine    FEngine::GetInstance()

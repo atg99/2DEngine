@@ -2,17 +2,29 @@
 #include <iostream>
 #include "Vector.h"
 #include "Windows.h"
+#include "FEngine.h"
+#include "PaperFlipBookComponent.h"
+#include "CollisionComponent.h"
 
 using namespace std;
 
 AActor::AActor()
 {
+	FlipComp = new UPaperFlipBookComponent();
+	FlipComp->SetOwner(this);
+	AddComponent(FlipComp);
 
+	CollisionComp = new UCollisionComponent();
+	CollisionComp->SetOwner(this);
+	AddComponent(CollisionComp);
 }
 
 AActor::~AActor()
 {
-	
+	for (auto Comp : Components)
+	{
+		delete Comp;
+	}
 }
 
 void AActor::Tick()
@@ -20,28 +32,14 @@ void AActor::Tick()
 
 }
 
-
-void AActor::Render()
+void AActor::AddComponent(UComponent* InComponent)
 {
-	COORD Position;
-	Position.X = Location.X;
-	Position.Y = Location.Y;
-
-	SetConsoleCursorPosition((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE), Position);
-	std::cout << Shape;
+	Components.push_back(InComponent);
 }
 
-bool AActor::CheckCollsion(const AActor* Other)
+std::vector<UComponent*> AActor::GetComponents()
 {
-	if (Other->bIsOverlap)
-	{
-		return false;
-	}
-	if (Other->GetbIsCollision() && bIsCollision && Other->GetActorLocation() == Location)
-	{
-		return true;
-	}
-	return false;
+	return Components;
 }
 
 void AActor::ActorBeginOverlap()
